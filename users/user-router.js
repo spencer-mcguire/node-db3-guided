@@ -21,9 +21,7 @@ router.get("/:id", (req, res) => {
   const { id } = req.params;
 
   Users.findById(id)
-    .then(users => {
-      const user = users[0];
-
+    .then(user => {
       if (user) {
         res.json(user);
       } else {
@@ -37,9 +35,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   const userData = req.body;
-
-  db("users")
-    .insert(userData)
+  Users.insert(userData)
     .then(ids => {
       res.status(201).json({ created: ids[0] });
     })

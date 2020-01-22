@@ -3,7 +3,8 @@ const db = require("../data/db-config");
 // above the fold
 module.exports = {
   find,
-  findById
+  findById,
+  insert
 };
 
 //implementaition detail
@@ -16,9 +17,16 @@ function find() {
 
 // GET by Id
 function findById(id) {
-  console.log(id);
-  return db
-    .select("*")
-    .from("users")
-    .where({ id });
+  //   return db
+  //     .select("*")
+  //     .from("users")
+  //     .where({ id });
+  return db("users")
+    .where({ id })
+    .first();
+}
+
+// POST submit new user
+function insert(userData) {
+  return db("users").insert(userData);
 }
