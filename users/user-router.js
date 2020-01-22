@@ -36,8 +36,8 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   const userData = req.body;
   Users.insert(userData)
-    .then(ids => {
-      res.status(201).json({ created: ids[0] });
+    .then(user => {
+      res.status(201).json(user);
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to create new user" });
@@ -48,12 +48,10 @@ router.put("/:id", (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  db("users")
-    .where({ id })
-    .update(changes)
-    .then(count => {
-      if (count) {
-        res.json({ update: count });
+  Users.update(id, changes)
+    .then(user => {
+      if (user) {
+        res.json(user);
       } else {
         res.status(404).json({ message: "Could not find user with given id" });
       }

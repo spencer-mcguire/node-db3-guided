@@ -4,7 +4,8 @@ const db = require("../data/db-config");
 module.exports = {
   find,
   findById,
-  insert
+  insert,
+  update
 };
 
 //implementaition detail
@@ -28,5 +29,19 @@ function findById(id) {
 
 // POST submit new user
 function insert(userData) {
-  return db("users").insert(userData);
+  return db("users")
+    .insert(userData)
+    .then(id => {
+      return findById(id[0]);
+    });
 }
+
+// PUT update a user
+function update(id, changes) {
+  return db("users")
+    .where({ id })
+    .update(changes)
+    .then(user => findById(id));
+}
+
+// DELETE remove a user
