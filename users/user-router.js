@@ -64,9 +64,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  db("users")
-    .where({ id })
-    .del()
+  Users.remove(id)
     .then(count => {
       if (count) {
         res.json({ removed: count });
